@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<style>
+pre { margin: 2px; }
+table {
+  border: 1px solid black;
+  border-spacing: 5px 5px;
+}
+</style>
+
+<h1>L3 Intermediate Language</h1>
+
+<h2>Declarations</h3>
+
+<h3>Datatypes and Records</h1>
+<pre>(datatype name (c1 ty1) (c2 ty2) ..)</pre>
+<pre>(record name (fld1 ty1) (fld2 ty2) ..)</pre>
+
+<h3>Functions</h3>
+<pre>(def name args body)</pre>
+
+<h2>Types and Constants</h2>
+
+<table>
+<tr> <th> Type </th> <th> Example Constants </th> <th> Comments </th> <tr>
+<tr> <td> <pre>unit</pre> </td> <td>  <pre>unit</pre> </td> <tr>
+<tr> <td> <pre>bool</pre> </td> <td>  <pre>true</pre><pre>false</pre> </td> <tr>
+<tr> <td> <pre>char</pre> </td> <td>  <pre>(char a)</pre> <pre>(char \0)</pre> </td> <td> The numeric form is used when the chracter is not printable.</td> <tr>
+<tr> <td> <pre>nat</pre> </td> <td>  <pre>(nat 0)</pre> </td> </tr>
+<tr> <td> <pre>int</pre> </td> <td>  <pre>(int ~1)</pre> <pre>(int 0)</pre></td> </tr>
+<tr> <td> <pre>(bits n)</pre> </td> <td> <pre>(bv 0 32)</pre> <pre>(bv 0 n)</pre> </td> </tr>
+<tr> <td> <pre>(tyvar a)</pre> </td> <td>-</td> <td>Type variable.</td> </tr>
+<tr> <td> <pre>(list bool)</pre> </td> <td>  <pre>(bl 101)</pre> </td> <td> Bool lists (bit-strings). </td> </tr>
+<tr> <td> <pre>(list char)</pre> </td> <td>  <pre>(string "hello")</pre> <pre>(list (char \0) (char a))</pre> </td> <td width="400px">The first form is used when the string is made up of printable characters. </td> </tr>
+<tr> <td> <pre>(list ty)</pre> </td> <td><pre>(nil ty)</pre> <pre>(list a b c ..)</pre></td> <td>[] and [a, b, c, &#8230;]</td> </tr>
+<tr> <td> <pre>(set ty)</pre> </td> <td><pre>(empty ty)</pre> <pre>(set a b c ..)</td> <td>{} and {a, b, c, &#8230;}</td></tr>
+<tr> <td> <pre>(option ty)</pre> </td> <td><pre>(none ty)</td> </tr>
+<tr> <td> <pre>(prod ty1 ty2 ty3 ..)</pre> </td> <td> <pre>(tuple a b c ..)</pre></td> <td> ty1 &times; (ty2 &times; (ty3 &times; &#8230;))</td></tr>
+<tr> <td> <pre>(arrow ty1 ty2)</pre> </td> <td>-</td> <td> ty1 &#x2192; ty2</td></tr>
+<tr> <td> ty </td> <td> <pre>(record ty fld1 fld2 ..)</pre> </td> <td> Record constructor.</td></tr>
+<tr> <td> ty </td> <td> <pre>(const c ty)</pre> </td> <td> Constant of named algebraic type.</td></tr>
+<tr> <td> ty </td> <td> <pre>(unknown ty)</pre> </td> <td> Arbitrary constant for any given type.</td></tr>
+</table>
+
+<h2>Expressions</h2>
+
+<table>
+<tr> <th> Expression </th> <tr>
+<tr> <td><pre>(var v ty)</pre></td><td>Variable</td></tr>
+<tr> <td><pre>(anonvar ty)</pre></td><td>Anonymous variable (_)</td></tr>
+<tr> <td><pre>(lambda v b)</pre></td> <td>Lambda abstraction</td> <td>&lambda;v. b</td></tr>
+<tr> <td><pre>(let v e b)</pre></td> <td>Let-expression</td> <td>let v := e in b</td></tr>
+<tr> <td><pre>(comb f x)</pre></td> <td>Combine</td> <td>f x</td></tr>
+<tr> <td><pre>(apply op x)</pre></td> <td>Apply (unary; see below)</td> <td>op x</td></tr>
+<tr> <td><pre>(apply+ op ty x)</pre></td> <td>Apply (unary, with return type)</td> <td>op x</td></tr>
+<tr> <td><pre>(apply op2 x y)</pre></td> <td>Apply (binary; see below)</td> <td>x op2 y</td></tr>
+<tr> <td><pre>(case e (pat1 b1) (pat2 b2) &#8230;)</pre></td> <td>Cases</td> <td></td></tr>
+<tr> <td><pre>(for a b c)</pre></td> <td>For loop</td> <td>for i in a to b do c</td></tr>
+<tr> <td><pre>(foreach a b)</pre></td> <td>Interate over list</td> <td>for i in a do b</td></tr>
+<tr> <td><pre>(concat a b ..)</pre></td> <td>Concatenate</td> <td></td></tr>
+<tr> <td><pre>(recordlookup fld a)</pre></td> <td>Record field lookup</td> <td>a.fld</td></tr>
+<tr> <td><pre>(recordupdate fld a)</pre></td> <td>Record field update</td> <td>fst(a).fld := snd(a)</td></tr>
+<tr> <td><pre>(update m a b)</pre></td> <td>Function update</td> <td>m(a) := b</td></tr>
+<tr> <td><pre>(bvextract s h l a)</pre></td> <td>Bit-vector extract</td> <td>a&lt;h:l&gt; with s-bit result</td></tr>
+<tr> <td><pre>(bvinsert h l a b)</pre></td> <td>Bit-vector insert</td> <td>a&lt;h:l&gt; := b</td></tr>
+<tr> <td><pre>(blinsert h l a b)</pre></td> <td>Bool list insert</td> <td>a&lt;h:l&gt; := b</td></tr>
+<tr> <td><pre>(totuple n a)</pre></td> <td>Bit-vector to n-tuple</td> <td>(a&lt;n-1&gt;, &#8230;, a&lt;1&gt, a&lt;0&gt)</td></tr>
+</table>
+
+<h2>Operations</h2>
+
+<table>
+<tr><th>Operation</th> <th>Over</th></tr>
+<tr><td><pre>abs</pre></td><td>bit-vectors, int</td></tr>
+<tr><td><pre>bin</pre></td><td>strings (to nat option)</td></tr>
+<tr><td><pre>bwnot</pre></td><td>bit-vectors</td></tr>
+<tr><td><pre>cardinality</pre></td><td>sets</td></tr>
+<tr><td><pre>concat</pre></td><td>lists of lists</td></tr>
+<tr><td><pre>dec</pre></td><td>strings (to nat option)</td></tr>
+<tr><td><pre>difference</pre></td><td>sets</td></tr>
+<tr><td><pre>drop</pre></td><td>lists</td></tr>
+<tr><td><pre>element</pre></td><td>lists</td></tr>
+<tr><td><pre>fp32to64</pre></td><td>floating-point</td></tr>
+<tr><td><pre>fp64to32</pre></td><td>floating-point</td></tr>
+<tr><td><pre>fst</pre></td><td>tuples</td></tr>
+<tr><td><pre>head</pre></td><td>lists</td></tr>
+<tr><td><pre>hex</pre></td><td>strings (to nat option)</td></tr>
+<tr><td><pre>indexof</pre></td><td>lists</td></tr>
+<tr><td><pre>initmap</pre></td><td>maps</td></tr>
+<tr><td><pre>intersect</pre></td><td>sets</td></tr>
+<tr><td><pre>isalpha</pre></td><td>char</td></tr>
+<tr><td><pre>isalphanum</pre></td><td>char</td></tr>
+<tr><td><pre>isdigit</pre></td><td>char</td></tr>
+<tr><td><pre>ishexdigit</pre></td><td>char</td></tr>
+<tr><td><pre>islower</pre></td><td>char</td></tr>
+<tr><td><pre>ismember</pre></td><td>lists</td></tr>
+<tr><td><pre>issome</pre></td><td>option</td></tr>
+<tr><td><pre>isspace</pre></td><td>char</td></tr>
+<tr><td><pre>issubset</pre></td><td>sets</td></tr>
+<tr><td><pre>isupper</pre></td><td>char</td></tr>
+<tr><td><pre>length</pre></td><td>lists</td></tr>
+<tr><td><pre>log</pre></td><td>bit-vectors, nat</td></tr>
+<tr><td><pre>max</pre></td><td>bit-vectors, int, nat</td></tr>
+<tr><td><pre>min</pre></td><td>bit-vectors, int, nat</td></tr>
+<tr><td><pre>msb</pre></td><td>bit-vectors</td></tr>
+<tr><td><pre>neg</pre></td><td>bit-vectors, int</td></tr>
+<tr><td><pre>not</pre></td><td>bool</td></tr>
+<tr><td><pre>padleft</pre></td><td>lists</td></tr>
+<tr><td><pre>padright</pre></td><td>lists</td></tr>
+<tr><td><pre>quotrem</pre></td><td>int</td></tr>
+<tr><td><pre>remove</pre></td><td>lists</td></tr>
+<tr><td><pre>removeduplicates</pre></td><td>lists</td></tr>
+<tr><td><pre>removeexcept</pre></td><td>lists</td></tr>
+<tr><td><pre>rev</pre></td><td>bit-vectors, lists</td></tr>
+<tr><td><pre>setoflist</pre></td><td>lists</td></tr>
+<tr><td><pre>size</pre></td><td>bit-vectors</td></tr>
+<tr><td><pre>smax</pre></td><td>bit-vectors</td></tr>
+<tr><td><pre>smin</pre></td><td>bit-vectors</td></tr>
+<tr><td><pre>snd</pre></td><td>tuples</td></tr>
+<tr><td><pre>some</pre></td><td>option</td></tr>
+<tr><td><pre>tail</pre></td><td>lists</td></tr>
+<tr><td><pre>take</pre></td><td>lists</td></tr>
+<tr><td><pre>tolower</pre></td><td>strings</td></tr>
+<tr><td><pre>toupper</pre></td><td>strings</td></tr>
+<tr><td><pre>union</pre></td><td>sets</td></tr>
+<tr><td><pre>update</pre></td><td>lists</td></tr>
+<tr><td><pre>valof</pre></td><td>option</td></tr>
+<tr><td><pre>(castto ty)</pre></td><td>bool, int, nat, bool lists, strings, bit-vectors, enums</td></tr>
+<tr><td><pre>(fpabs {32,64})</pre></td><td>floating-point</td></tr>
+<tr><td><pre>(fpadd {32,64})</pre></td><td>floating-point</td></tr>
+<tr><td><pre>(fpcmp {32,64})</pre></td><td>floating-point</td></tr>
+<tr><td><pre>(fpdiv {32,64})</pre></td><td>floating-point</td></tr>
+<tr><td><pre>(fpeq {32,64})</pre></td><td>floating-point</td></tr>
+<tr><td><pre>(fpfromint {32,64})</pre></td><td>floating-point</td></tr>
+<tr><td><pre>(fpge {32,64})</pre></td><td>floating-point</td></tr>
+<tr><td><pre>(fpgt {32,64})</pre></td><td>floating-point</td></tr>
+<tr><td><pre>(fpisfinite {32,64})</pre></td><td>floating-point</td></tr>
+<tr><td><pre>(fpisnan {32,64})</pre></td><td>floating-point</td></tr>
+<tr><td><pre>(fpisnormal {32,64})</pre></td><td>floating-point</td></tr>
+<tr><td><pre>(fpissubnormal {32,64})</pre></td><td>floating-point</td></tr>
+<tr><td><pre>(fple {32,64})</pre></td><td>floating-point</td></tr>
+<tr><td><pre>(fplt {32,64})</pre></td><td>floating-point</td></tr>
+<tr><td><pre>(fpmul {32,64})</pre></td><td>floating-point</td></tr>
+<tr><td><pre>(fpmuladd {32,64})</pre></td><td>floating-point</td></tr>
+<tr><td><pre>(fpmulsub {32,64})</pre></td><td>floating-point</td></tr>
+<tr><td><pre>(fpneg {32,64})</pre></td><td>floating-point</td></tr>
+<tr><td><pre>(fpsqrt {32,64})</pre></td><td>floating-point</td></tr>
+<tr><td><pre>(fpsub {32,64})</pre></td><td>floating-point</td></tr>
+<tr><td><pre>(fptoint {32,64})</pre></td><td>floating-point</td></tr>
+<tr><td><pre>(signextend n)</pre></td><td>bit-vectors</td></tr>
+</table>
+
+<h2>Binary Operations (infixes)</h2>
+
+</body>
+</html>

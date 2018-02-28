@@ -1,0 +1,42 @@
+@media screen {
+    li {
+      padding: 8px;
+      font-size: 18px;
+    }
+    body {
+      width: 860px;
+      margin-top: 30px;
+      margin-left: auto;
+      margin-right: auto;
+      font-family: "Helvetica Neue", arial, sans-serif;
+      font-weight: 200;
+      font-size: 18px;
+      color: #909090;
+    }
+    ul {
+      list-style-type: square;
+    }
+    a:link {
+      color: #008000;
+      text-decoration: none;
+    }
+    a:visited {
+      color: #0080A0;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    h1 {
+      font-family: "Comic Sans MS", cursive;
+      font-size: 32px;
+      font-weight: 300;
+      color: #400000;
+    }
+    h2 {
+      font-size: 24px;
+      font-family: "Helvetica Neue", arial, sans-serif;
+      font-weight: 400;
+      color: #400000;
+    }
+}

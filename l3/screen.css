@@ -1,0 +1,48 @@
+@media screen {
+    body {
+      margin: 40px;
+      font-family: "Helvetica Neue", arial;
+      font-weight: 300;
+      color: #006060;
+      font-size: 18px;
+    }
+    a:link
+    {
+      color: #00B060;
+      text-decoration: none;
+    }
+    a:visited
+    {
+      color: #0080B0;
+      text-decoration: none;
+    }
+    a:hover
+    {
+      text-decoration: underline;
+    }
+    h1
+    {
+      font-size: 28pt;
+      font-family: "Helvetica Neue", arial;
+      font-weight: 400;
+    }
+    h2
+    {
+      font-size: 22pt;
+      font-family: "Helvetica Neue", arial;
+      font-weight: 400;
+    }
+    .homepage { text-decoration: none; }
+    .paper { margin-top: 14px; }
+    ul
+    {
+      list-style-type: none;
+      padding: 0px;
+      margin: 10px;
+    }
+    li
+    {
+      padding: 5px;
+      font-style:italic;
+    }
+}

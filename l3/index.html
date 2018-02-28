@@ -1,0 +1,43 @@
+<html>
+  <head>
+    <title>L3</title>
+    <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+    <link rel="stylesheet" href="screen.css" type="text/css" media="screen" >
+    <link rel="stylesheet" href="mobile.css" type="text/css" media="only screen and (max-device-width: 480px)" >
+  </head>
+
+  <body>
+  <div style="margin: 50px; padding: 30px; height: *; border-style: dotted; border-width: 1px; background-color: #F0F0F0;">
+
+    <h1>L3: A Specification Language for Instruction Set Architectures</h1>
+      <p>L3 is implemented in <a href="http://www.polyml.org">Poly/ML 5.7</a> and the latest version is <a href="l3.tar.bz2">l3.tar.bz2</a> [2018-01-09]. There is also a <a href="l3.pdf">manual</a> and an ITP 2012 paper: <a href="../papers/itp12.pdf">Directions in ISA specification</a>.
+      <p>Alexandre Joannou has provided support for Vim syntax highlighting. This is maintained at the repository <a href="https://github.com/gameboo/vim-l3">vim-l3</a>.
+
+    <h2>Models</h2>
+      <p>The release contains a sample specification "<a href="tiny.spec">tiny.spec</a>" that is based on Thaker's Tiny 3 computer. For background information see Simon Moore's ECAD <a href="http://www.cl.cam.ac.uk/teaching/1112/ECAD+Arch/background/ttc.html">course notes</a>.
+
+      <p>ARM, MIPS and x86 models are available in <a href="isa-models.tar.bz2">isa-models.tar.bz2</a>.
+      <ul>
+      <li>&mdash; The ARM model covers ARMv4 to ARMv7. It does not cover the Advanced SIMD extensions (Neon) or co-processor instructions. There is partial coverage for floating-point instructions (VFPv3-D32). There is also a separate ARMv8 model that covers AArch64 mode only. It also omits the Advanced SIMD and floating-point instructions.</li>
+      <li>&mdash; The MIPS model is near complete for MIPS III (64-bit mode only). It does not cover floating-point and memory management instructions (e.g. TLBR and CACHE). Limited support is provided for some co-processor instructions. A more complete model is available in the GitHub repository <a href="https://github.com/acjf3/l3mips">l3mips</a>.</li>
+      <li>&mdash; The x86 model covers a core selection of x86-64 instructions (64-bit mode only). It does not cover any extensions (x87 FPU, MMX, SSE and so forth).
+      <li>&mdash; Prashanth Mundkur has written an L3 specification of the RISC-V architecture. This is available in the GitHub repository <a href="https://github.com/SRI-CSL/l3riscv">l3riscv</a>.
+      </ul>
+    <a href="http://hol-theorem-prover.org">HOL4</a> versions of these models can be found in the <a href="https://github.com/HOL-Theorem-Prover/HOL/tree/master/examples/l3-machine-code">examples directory</a>.
+    These models are now <a href="isabelle/index.html">available</a> for use in <a href="https://isabelle.in.tum.de">Isabelle/HOL</a>.
+
+    <h2>Users</h2>
+    The following are known users of our models/tools:
+    <ul>
+    <li>&mdash; <a href="http://www.cl.cam.ac.uk/~mom22/">University of Cambridge Computer Laboratory and Chalmers University of Technology (Magnus Myreen)</a>
+    <li>&mdash; <a href="http://www.csc.kth.se/~oschwarz/prosper/">KTH School of Computer Science and Communication</a>
+    <li>&mdash; <a href="http://ssrg.nicta.com.au/">The Trustworthy Systems group at  Data61<a>. (Formerly called the Software Systems Research Group at NICTA.)
+    <li>&mdash; <a href="http://pages.cs.wisc.edu/~reps/">University of Wisconsin-Madison (Thomas Reps)</a> and <a href="http://www.grammatech.com">GrammaTech</a>
+    <li>&mdash; <a href="http://homepages.inf.ed.ac.uk/bcampbe2/">University of Edinburgh School of Informatics (Brian Campbell)</a>
+    <li>&mdash; <a href="http://www.rockwellcollins.com">Rockwell Collins</a>
+    <li>&mdash; <a href="http://www.drisq.com">D-RisQ</a>
+    <li>&mdash; <a href="http://www.sri.com/work/projects/ctsrd">SRI International (Prashanth Mundkur)</a>
+    </ul>
+  </div">
+  </body>
+</html>
